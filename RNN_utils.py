@@ -22,31 +22,34 @@ def window_transform_series(series, window_size):
     y.shape = (len(y),1)
     return X,y
 
-def window_transform_text(text, window_size, step_size):
+def example_to_io(example, input_window_size, input_step_size):
     # containers for input/output pairs
     inputs = []
     outputs = []
-    
+
     # This is the number of iterations taking into acount the step_size and the window_size
-    N = int((len(text)-window_size)/step_size)
+    N = int((len(example) - input_window_size) / input_step_size)
+
     # Get inputs and outputs
     for k in range(N):
-        i = k*step_size
-        inputs.append(text[i:i+window_size])
-        outputs.append(text[i+window_size])
-        
-    return inputs,outputs
+        i = k * input_step_size
+        inputs.append(example[i:i + input_window_size])
+        outputs.append(example[i + input_window_size])
 
-def encode_io_pairs(text,chars, window_size,step_size):
-    num_chars = len(chars)
-    chars_to_indices = dict((c, i) for i, c in enumerate(chars))
+    return inputs, outputs
+
+
+def example_to_io_pairs(example, possible_elements, input_window_size, input_step_size):
+    num_chars = len(possible_elements)
+    chars_to_indices = dict((c, i) for i, c in enumerate(possible_elements))
+
     # cut up text into character input/output pairs
-    inputs, outputs = window_transform_text(text,window_size,step_size)
-    
+    inputs, outputs = example_to_io(example, input_window_size, input_step_size)
+
     # create empty vessels for one-hot encoded input/output
-    X = np.zeros((len(inputs), window_size, num_chars), dtype=np.bool)
-    y = np.zeros((len(inputs), num_chars), dtype=np.bool)
-    
+    X = np.zeros((len(inputs), input_window_size, num_chars), dtype=np.int)
+    y = np.zeros((len(inputs), num_chars), dtype=np.int)
+
     # loop over inputs/outputs and tranform and store in X/y
     for i, sentence in enumerate(inputs):
         for t, char in enumerate(sentence):
@@ -57,8 +60,8 @@ def encode_io_pairs(text,chars, window_size,step_size):
         if out_char not in chars_to_indices:
             out_char = ' '
         y[i, chars_to_indices[out_char]] = 1
-    return X,y
 
+    return X, y
 def get_deep_rnn(input_shape, dense_units = 80, LSTM_units_1=200, LSTM_units_2=200, dropout_p=0.2, stateful=False, verbose=True):
     # Model definition
     if verbose:
@@ -98,13 +101,41 @@ def sample(a, temperature=1.0, verbose = False, return_dist=False):
         return np.random.choice(choices, p=sample_temp)
     #return np.argmax(np.random.multinomial(1, sample_temp, 1))
 
-def chars_to_one_hot(sentence, chars, chars_to_indices, window_size):
-    num_chars = len(chars)
-    size = max(len(sentence),window_size)
-    X = np.zeros((1, size, num_chars), dtype=np.bool)
-    for t, char in enumerate(sentence):
-        if char not in chars_to_indices:
-            char = ' '
-        else:
-            X[0, t + size - len(sentence), chars_to_indices[char]] = 1
-    return X
+def to_one_hot_vector(example, possible_elements, element_to_indices, window_size):
+    sequence_len = get_sequence_len(example, window_size)
+
+    one_hot_vector = create_one_hot_vector(
+        sequence_len=sequence_len,
+        possible_elements_count=len(possible_elements)
+    )
+
+    for index, element in enumerate(example):
+        if element in element_to_indices:
+            one_hot_vector[0, index, element_to_indices[element]] = 1
+
+    return one_hot_vector
+
+
+def create_one_hot_vector(sequence_len, possible_elements_count):
+    return np.zeros((1, sequence_len, possible_elements_count), dtype=np.int)
+
+
+def get_sequence_len(example, window_size): return max(len(example), window_size)
+
+
+def show_results(inputs, outputs, chars_to_indices, indices_to_chars):
+    print(outputs.shape)
+    print()
+    for char in chars_to_indices.keys():
+        print('   _' if ' ' == char else char, end='    ')
+
+    print()
+    for index, row in enumerate(inputs):
+        input_char = indices_to_chars[np.argmax(outputs[:, index])]
+        classes_probabilities = (row * 100).astype(int) / 100
+        predicted_char = indices_to_chars[np.argmax(row)]
+        print(
+            input_char,
+            classes_probabilities,
+            predicted_char
+        )
