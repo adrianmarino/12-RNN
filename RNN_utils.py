@@ -123,19 +123,21 @@ def create_one_hot_vector(sequence_len, possible_elements_count):
 def get_sequence_len(example, window_size): return max(len(example), window_size)
 
 
-def show_results(inputs, outputs, chars_to_indices, indices_to_chars):
-    print(outputs.shape)
-    print()
-    for char in chars_to_indices.keys():
-        print('   _' if ' ' == char else char, end='    ')
+def show_results(
+    outputs,
+    chars_to_indices,
+    indices_to_chars,
+    input_sequence_resolver
+):
+    print('\n --------------------------------------------------------------')
+    print('| Sequence len (T) => ',  len(input_sequence_resolver(0)))
+    print('| Output Shape: ', outputs.shape)
+    print(' --------------------------------------------------------------')
 
+    for char in chars_to_indices.keys(): print('   _' if ' ' == char else char, end='    ')
     print()
-    for index, row in enumerate(inputs):
-        input_char = indices_to_chars[np.argmax(outputs[:, index])]
+    for index, row in enumerate(outputs):
+        input_sequence = input_sequence_resolver(index)
         classes_probabilities = (row * 100).astype(int) / 100
         predicted_char = indices_to_chars[np.argmax(row)]
-        print(
-            input_char,
-            classes_probabilities,
-            predicted_char
-        )
+        print(input_sequence, classes_probabilities, predicted_char)
