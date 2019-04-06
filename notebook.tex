@@ -1,0 +1,3893 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{5\_Entendiendo\_batch\_en\_stateful\_RNN}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    Idea original modificada:
+http://philipperemy.github.io/keras-stateful-lstm/
+
+    Interestante:
+
+https://machinelearningmastery.com/use-different-batch-sizes-training-predicting-python-keras/
+
+    \hypertarget{generamos-una-secuencia-artificial}{%
+\subsection{Generamos una secuencia
+artificial:}\label{generamos-una-secuencia-artificial}}
+
+\begin{itemize}
+\tightlist
+\item
+  Cada muestra es una secuencia binaria de 20 bits.
+\item
+  Para X: El primer bit es es 1 con una probabilidad de 0.5, el resto
+  son todos ceros
+\item
+  Para y: La etiqueta es 1 si el primer bit es 1
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{n}{N\PYZus{}samples} \PY{o}{=} \PY{l+m+mi}{1200}
+        \PY{n}{N\PYZus{}bits} \PY{o}{=} \PY{l+m+mi}{20}
+        \PY{k+kn}{from} \PY{n+nn}{numpy}\PY{n+nn}{.}\PY{n+nn}{random} \PY{k}{import} \PY{n}{choice}
+        \PY{n}{one\PYZus{}indexes} \PY{o}{=} \PY{n}{choice}\PY{p}{(}\PY{n}{a}\PY{o}{=}\PY{n}{N\PYZus{}samples}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{n+nb}{int}\PY{p}{(}\PY{n}{N\PYZus{}samples} \PY{o}{/} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n}{replace}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+        \PY{n}{X} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{N\PYZus{}samples}\PY{p}{,} \PY{n}{N\PYZus{}bits}\PY{p}{)}\PY{p}{)}
+        \PY{n}{X}\PY{p}{[}\PY{n}{one\PYZus{}indexes}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}  \PY{c+c1}{\PYZsh{} very long term memory.}
+        \PY{n}{y} \PY{o}{=} \PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{N\PYZus{}train} \PY{o}{=} \PY{l+m+mi}{1000}
+        \PY{n}{X\PYZus{}train} \PY{o}{=} \PY{n}{X}\PY{p}{[}\PY{p}{:}\PY{n}{N\PYZus{}train}\PY{p}{]}
+        \PY{n}{y\PYZus{}train} \PY{o}{=} \PY{n}{y}\PY{p}{[}\PY{p}{:}\PY{n}{N\PYZus{}train}\PY{p}{]}
+        \PY{n}{X\PYZus{}validation} \PY{o}{=} \PY{n}{X}\PY{p}{[}\PY{n}{N\PYZus{}train}\PY{p}{:}\PY{p}{]}
+        \PY{n}{y\PYZus{}validation} \PY{o}{=} \PY{n}{y}\PY{p}{[}\PY{n}{N\PYZus{}train}\PY{p}{:}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{idx} \PY{o}{=} \PY{l+m+mi}{1}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Entrada: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{X\PYZus{}train}\PY{p}{[}\PY{n}{idx}\PY{p}{]}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Salida:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{[}\PY{n}{idx}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Entrada:  [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+Salida: 0.0
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Training}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Validation}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{X\PYZus{}validation}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{y\PYZus{}validation}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Training
+(1000, 20)
+(1000,)
+Validation
+(200, 20)
+(200,)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{def} \PY{n+nf}{prepare\PYZus{}sequences}\PY{p}{(}\PY{n}{x\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{window\PYZus{}length}\PY{p}{)}\PY{p}{:}
+            \PY{n}{windows} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{n}{windows\PYZus{}y} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{sequence} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{x\PYZus{}train}\PY{p}{)}\PY{p}{:}
+                \PY{n}{len\PYZus{}seq} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{sequence}\PY{p}{)}
+                \PY{k}{for} \PY{n}{window\PYZus{}start} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{len\PYZus{}seq} \PY{o}{\PYZhy{}} \PY{n}{window\PYZus{}length} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{window\PYZus{}end} \PY{o}{=} \PY{n}{window\PYZus{}start} \PY{o}{+} \PY{n}{window\PYZus{}length}
+                    \PY{n}{window} \PY{o}{=} \PY{n}{sequence}\PY{p}{[}\PY{n}{window\PYZus{}start}\PY{p}{:}\PY{n}{window\PYZus{}end}\PY{p}{]}
+                    \PY{n}{windows}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{window}\PY{p}{)}
+                    \PY{n}{windows\PYZus{}y}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+            \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{windows}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{windows\PYZus{}y}\PY{p}{)}
+\end{Verbatim}
+
+
+    \hypertarget{que-pasa-si-partimos-la-secuencia-para-entrenar}{%
+\subsection{Que pasa si partimos la secuencia para
+entrenar?}\label{que-pasa-si-partimos-la-secuencia-para-entrenar}}
+
+    \hypertarget{probar}{%
+\subsubsection{Probar:}\label{probar}}
+
+\begin{itemize}
+\tightlist
+\item
+  window\_length = 10, 15, 20
+\item
+  batch\_size = 1, 50, 1000
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{window\PYZus{}length} \PY{o}{=} \PY{l+m+mi}{20}
+        \PY{n}{X\PYZus{}train\PYZus{}split\PYZus{}1}\PY{p}{,} \PY{n}{y\PYZus{}train\PYZus{}split\PYZus{}1} \PY{o}{=} \PY{n}{prepare\PYZus{}sequences}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{window\PYZus{}length}\PY{p}{)}
+        \PY{n}{X\PYZus{}validation\PYZus{}split\PYZus{}1}\PY{p}{,} \PY{n}{y\PYZus{}validation\PYZus{}split\PYZus{}1} \PY{o}{=} \PY{n}{prepare\PYZus{}sequences}\PY{p}{(}\PY{n}{X\PYZus{}validation}\PY{p}{,} \PY{n}{y\PYZus{}validation}\PY{p}{,} \PY{n}{window\PYZus{}length}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c+c1}{\PYZsh{} Empieza el nuevo vector en (N\PYZus{}bits \PYZhy{} window\PYZus{}length + 1)}
+        \PY{n}{next\PYZus{}vect\PYZus{}delta} \PY{o}{=} \PY{n}{N\PYZus{}bits} \PY{o}{\PYZhy{}} \PY{n}{window\PYZus{}length} \PY{o}{+} \PY{l+m+mi}{1}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}split\PYZus{}1}\PY{p}{[}\PY{n}{next\PYZus{}vect\PYZus{}delta}\PY{p}{]}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} Los y\PYZsq{}s son todos unos si el primer valor del vector fue 1}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{y\PYZus{}train\PYZus{}split\PYZus{}1}\PY{p}{[}\PY{n}{next\PYZus{}vect\PYZus{}delta}\PY{p}{]}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{y\PYZus{}train\PYZus{}split\PYZus{}1}\PY{p}{[}\PY{n}{next\PYZus{}vect\PYZus{}delta}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}split\PYZus{}1}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+0.0
+1.0
+(1000, 20)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{layers} \PY{k}{import} \PY{n}{SimpleRNN}\PY{p}{,} \PY{n}{Dense}\PY{p}{,} \PY{n}{LSTM}
+        \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{models} \PY{k}{import} \PY{n}{Sequential}
+        \PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{l+m+mi}{50}
+        
+        \PY{n}{model} \PY{o}{=} \PY{n}{Sequential}\PY{p}{(}\PY{p}{)}
+        \PY{n}{model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{LSTM}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{input\PYZus{}shape}\PY{o}{=}\PY{p}{(}\PY{n}{window\PYZus{}length}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{return\PYZus{}sequences}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{stateful}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{)}
+        \PY{n}{model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigmoid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+        
+        \PY{n}{model}\PY{o}{.}\PY{n}{compile}\PY{p}{(}\PY{n}{loss}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{binary\PYZus{}crossentropy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{optimizer}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{adam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{metrics}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+        \PY{n}{model}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}split\PYZus{}1}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{window\PYZus{}length}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{y\PYZus{}train\PYZus{}split\PYZus{}1}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{o}{=}\PY{n}{batch\PYZus{}size}\PY{p}{,} \PY{n}{epochs}\PY{o}{=}\PY{l+m+mi}{15}\PY{p}{,}
+                  \PY{n}{validation\PYZus{}data}\PY{o}{=}\PY{p}{(}\PY{n}{X\PYZus{}validation\PYZus{}split\PYZus{}1}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{window\PYZus{}length}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{y\PYZus{}validation\PYZus{}split\PYZus{}1}\PY{p}{)}\PY{p}{,} \PY{n}{shuffle}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+        \PY{n}{score}\PY{p}{,} \PY{n}{acc} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{evaluate}\PY{p}{(}\PY{n}{X\PYZus{}validation\PYZus{}split\PYZus{}1}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{window\PYZus{}length}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{y\PYZus{}validation\PYZus{}split\PYZus{}1}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{score}\PY{p}{,} \PY{n}{acc}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Using TensorFlow backend.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Train on 1000 samples, validate on 200 samples
+Epoch 1/15
+1000/1000 [==============================] - 2s 2ms/step - loss: 0.6925 - acc: 0.5210 - val\_loss: 0.6919 - val\_acc: 0.4800
+Epoch 2/15
+1000/1000 [==============================] - 1s 548us/step - loss: 0.6902 - acc: 0.5040 - val\_loss: 0.6875 - val\_acc: 0.4800
+Epoch 3/15
+1000/1000 [==============================] - 0s 475us/step - loss: 0.6765 - acc: 0.5040 - val\_loss: 0.6540 - val\_acc: 0.4800
+Epoch 4/15
+1000/1000 [==============================] - 0s 429us/step - loss: 0.5659 - acc: 0.5790 - val\_loss: 0.4221 - val\_acc: 1.0000
+Epoch 5/15
+1000/1000 [==============================] - 0s 439us/step - loss: 0.3010 - acc: 1.0000 - val\_loss: 0.2318 - val\_acc: 1.0000
+Epoch 6/15
+1000/1000 [==============================] - 0s 421us/step - loss: 0.1932 - acc: 1.0000 - val\_loss: 0.1711 - val\_acc: 1.0000
+Epoch 7/15
+1000/1000 [==============================] - 0s 441us/step - loss: 0.1459 - acc: 1.0000 - val\_loss: 0.1302 - val\_acc: 1.0000
+Epoch 8/15
+1000/1000 [==============================] - 0s 427us/step - loss: 0.1090 - acc: 1.0000 - val\_loss: 0.0950 - val\_acc: 1.0000
+Epoch 9/15
+1000/1000 [==============================] - 0s 433us/step - loss: 0.0799 - acc: 1.0000 - val\_loss: 0.0709 - val\_acc: 1.0000
+Epoch 10/15
+1000/1000 [==============================] - 0s 428us/step - loss: 0.0617 - acc: 1.0000 - val\_loss: 0.0564 - val\_acc: 1.0000
+Epoch 11/15
+1000/1000 [==============================] - 0s 442us/step - loss: 0.0502 - acc: 1.0000 - val\_loss: 0.0468 - val\_acc: 1.0000
+Epoch 12/15
+1000/1000 [==============================] - 0s 432us/step - loss: 0.0422 - acc: 1.0000 - val\_loss: 0.0397 - val\_acc: 1.0000
+Epoch 13/15
+1000/1000 [==============================] - 0s 425us/step - loss: 0.0361 - acc: 1.0000 - val\_loss: 0.0342 - val\_acc: 1.0000
+Epoch 14/15
+1000/1000 [==============================] - 0s 455us/step - loss: 0.0313 - acc: 1.0000 - val\_loss: 0.0298 - val\_acc: 1.0000
+Epoch 15/15
+1000/1000 [==============================] - 0s 445us/step - loss: 0.0274 - acc: 1.0000 - val\_loss: 0.0261 - val\_acc: 1.0000
+200/200 [==============================] - 2s 8ms/step
+0.026121034622192382 1.0
+
+    \end{Verbatim}
+
+    \begin{itemize}
+\tightlist
+\item
+  Como cambia la velocidad con los distintos tamaños de batch?
+\item
+  Estudiar tiempos de convergencia
+\item
+  Converge para todos los casos de longitud de la secuencia?
+\end{itemize}
+
+    \hypertarget{usando-batch_size-de-1-stateful-y-window_lenght-1}{%
+\subsection{Usando Batch\_size de 1, stateful y window\_lenght =
+1}\label{usando-batch_size-de-1-stateful-y-window_lenght-1}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{window\PYZus{}length} \PY{o}{=} \PY{l+m+mi}{1}
+        \PY{n}{X\PYZus{}train\PYZus{}split\PYZus{}2}\PY{p}{,} \PY{n}{y\PYZus{}train\PYZus{}split\PYZus{}2} \PY{o}{=} \PY{n}{prepare\PYZus{}sequences}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{window\PYZus{}length}\PY{p}{)}
+        \PY{n}{X\PYZus{}validation\PYZus{}split\PYZus{}2}\PY{p}{,} \PY{n}{y\PYZus{}validation\PYZus{}split\PYZus{}2} \PY{o}{=} \PY{n}{prepare\PYZus{}sequences}\PY{p}{(}\PY{n}{X\PYZus{}validation}\PY{p}{,} \PY{n}{y\PYZus{}validation}\PY{p}{,} \PY{n}{window\PYZus{}length}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{l+m+mi}{1}
+         
+         \PY{n}{model} \PY{o}{=} \PY{n}{Sequential}\PY{p}{(}\PY{p}{)}
+         \PY{n}{model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{LSTM}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{batch\PYZus{}input\PYZus{}shape}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{return\PYZus{}sequences}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{stateful}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{)}
+         \PY{n}{model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigmoid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         \PY{n}{model}\PY{o}{.}\PY{n}{compile}\PY{p}{(}\PY{n}{loss}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{binary\PYZus{}crossentropy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{optimizer}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{adam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{metrics}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         
+         
+         \PY{n}{model}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}split\PYZus{}2}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{window\PYZus{}length}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{y\PYZus{}train\PYZus{}split\PYZus{}2}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{o}{=}\PY{n}{batch\PYZus{}size}\PY{p}{,} \PY{n}{epochs}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}
+                   \PY{n}{validation\PYZus{}data}\PY{o}{=}\PY{p}{(}\PY{n}{X\PYZus{}validation\PYZus{}split\PYZus{}2}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{window\PYZus{}length}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{y\PYZus{}validation\PYZus{}split\PYZus{}2}\PY{p}{)}\PY{p}{,} \PY{n}{shuffle}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+         \PY{n}{score}\PY{p}{,} \PY{n}{acc} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{evaluate}\PY{p}{(}\PY{n}{X\PYZus{}validation\PYZus{}split\PYZus{}2}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{window\PYZus{}length}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{y\PYZus{}validation\PYZus{}split\PYZus{}2}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{score}\PY{p}{,} \PY{n}{acc}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Train on 20000 samples, validate on 4000 samples
+Epoch 1/1
+20000/20000 [==============================] - 77s 4ms/step - loss: 0.6937 - acc: 0.5553 - val\_loss: 0.6974 - val\_acc: 0.5200
+4000/4000 [==============================] - 5s 1ms/step
+0.6974221825525164 0.52
+
+    \end{Verbatim}
+
+    Que pasa en este caso? Por que no llega a mejorar la accuracy?
+
+    \hypertarget{reseteo-despues-de-cada-secuencia}{%
+\subsection{Reseteo despues de cada
+secuencia}\label{reseteo-despues-de-cada-secuencia}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{c+c1}{\PYZsh{} N\PYZus{}bits es 20, la longitud de la secuencia}
+         \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}
+         \PY{n}{X\PYZus{}validation\PYZus{}split\PYZus{}2}\PY{p}{[}\PY{n}{i}\PY{o}{*}\PY{n}{N\PYZus{}bits}\PY{p}{:}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{N\PYZus{}bits}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} array([[1.],
+                [0.],
+                [0.],
+                [0.],
+                [0.],
+                [0.],
+                [0.],
+                [0.],
+                [0.],
+                [0.],
+                [0.],
+                [0.],
+                [0.],
+                [0.],
+                [0.],
+                [0.],
+                [0.],
+                [0.],
+                [0.],
+                [0.]])
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{l+m+mi}{1}
+         
+         \PY{n}{model} \PY{o}{=} \PY{n}{Sequential}\PY{p}{(}\PY{p}{)}
+         \PY{n}{model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{LSTM}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{batch\PYZus{}input\PYZus{}shape}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{return\PYZus{}sequences}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{stateful}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{)}
+         \PY{n}{model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigmoid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         \PY{n}{model}\PY{o}{.}\PY{n}{compile}\PY{p}{(}\PY{n}{loss}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{binary\PYZus{}crossentropy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{optimizer}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{adam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{metrics}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}split\PYZus{}2}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+             \PY{n}{model}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}split\PYZus{}2}\PY{p}{[}\PY{n}{i}\PY{o}{*}\PY{n}{N\PYZus{}bits}\PY{p}{:}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{N\PYZus{}bits}\PY{p}{]}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{window\PYZus{}length}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} 
+                       \PY{n}{y\PYZus{}train\PYZus{}split\PYZus{}2}\PY{p}{[}\PY{n}{i}\PY{o}{*}\PY{n}{N\PYZus{}bits}\PY{p}{:}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{N\PYZus{}bits}\PY{p}{]}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{o}{=}\PY{n}{batch\PYZus{}size}\PY{p}{,} \PY{n}{epochs}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{shuffle}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+             \PY{n}{model}\PY{o}{.}\PY{n}{reset\PYZus{}states}\PY{p}{(}\PY{p}{)}
+         \PY{n}{score}\PY{p}{,} \PY{n}{acc} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{evaluate}\PY{p}{(}\PY{n}{X\PYZus{}validation\PYZus{}split\PYZus{}2}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{window\PYZus{}length}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{y\PYZus{}validation\PYZus{}split\PYZus{}2}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{score}\PY{p}{,} \PY{n}{acc}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+0
+Epoch 1/1
+20/20 [==============================] - 1s 27ms/step - loss: 0.6805 - acc: 0.8000
+1
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.7370 - acc: 0.0000e+00
+2
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.6671 - acc: 0.9000
+3
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.7316 - acc: 0.0000e+00
+4
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.7012 - acc: 0.2000
+5
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.7044 - acc: 0.0000e+00
+6
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.6886 - acc: 1.0000
+7
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.6643 - acc: 1.0000
+8
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.6238 - acc: 1.0000
+9
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.5510 - acc: 1.0000
+10
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.3657 - acc: 1.0000
+11
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.1893 - acc: 1.0000
+12
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.1315 - acc: 1.0000
+13
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 3.3383 - acc: 0.0000e+00
+14
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.1728 - acc: 1.0000
+15
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.1729 - acc: 1.0000
+16
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.3807 - acc: 0.0000e+00
+17
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.6655 - acc: 0.0000e+00
+18
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.9535 - acc: 0.0000e+00
+19
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.7534 - acc: 0.0000e+00
+20
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.6690 - acc: 0.9500
+21
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.7327 - acc: 0.0000e+00
+22
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.6913 - acc: 0.5000
+23
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.6274 - acc: 0.9500
+24
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.5552 - acc: 1.0000
+25
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.4689 - acc: 1.0000
+26
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.0394 - acc: 0.0000e+00
+27
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 0.4922 - acc: 1.0000
+28
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.4488 - acc: 1.0000
+29
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.0595 - acc: 0.0000e+00
+30
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 0.4820 - acc: 1.0000
+31
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.4412 - acc: 1.0000
+32
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 0.3607 - acc: 1.0000
+33
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 0.2915 - acc: 1.0000
+34
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 0.2450 - acc: 1.0000
+35
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.6726 - acc: 0.0000e+00
+36
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.1530 - acc: 0.0000e+00
+37
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.4778 - acc: 1.0000
+38
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.9195 - acc: 0.0000e+00
+39
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.8216 - acc: 0.0000e+00
+40
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.5954 - acc: 1.0000
+41
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.5647 - acc: 1.0000
+42
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.8397 - acc: 0.0000e+00
+43
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.5598 - acc: 1.0000
+44
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.5235 - acc: 1.0000
+45
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.8981 - acc: 0.0000e+00
+46
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.5250 - acc: 1.0000
+47
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 0.8590 - acc: 0.0000e+00
+48
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.7841 - acc: 0.0000e+00
+49
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.6135 - acc: 1.0000
+50
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.5817 - acc: 1.0000
+51
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.8087 - acc: 0.0000e+00
+52
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.7518 - acc: 0.1000
+53
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.6900 - acc: 0.5000
+54
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.6865 - acc: 0.8000
+55
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.6538 - acc: 0.9000
+56
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.7189 - acc: 0.3500
+57
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.6800 - acc: 0.6000
+58
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.6285 - acc: 1.0000
+59
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.5780 - acc: 1.0000
+60
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 0.7990 - acc: 0.0000e+00
+61
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 0.7517 - acc: 0.0000e+00
+62
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 0.6907 - acc: 0.5500
+63
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 0.6750 - acc: 0.6000
+64
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 0.6383 - acc: 1.0000
+65
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.5841 - acc: 1.0000
+66
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.7791 - acc: 0.0000e+00
+67
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.7300 - acc: 0.0000e+00
+68
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.6638 - acc: 0.8000
+69
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.6873 - acc: 0.5500
+70
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.6421 - acc: 1.0000
+71
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.6948 - acc: 0.4500
+72
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.6476 - acc: 0.8500
+73
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.6783 - acc: 0.6000
+74
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.6097 - acc: 0.9500
+75
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.6610 - acc: 0.7000
+76
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.5905 - acc: 0.9500
+77
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.5145 - acc: 1.0000
+78
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.4045 - acc: 1.0000
+79
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.3192 - acc: 1.0000
+80
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.2638 - acc: 1.0000
+81
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.1188 - acc: 0.3500
+82
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.6767 - acc: 0.7000
+83
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 0.3628 - acc: 1.0000
+84
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.4441 - acc: 1.0000
+85
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.3551 - acc: 1.0000
+86
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.2919 - acc: 1.0000
+87
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.2475 - acc: 1.0000
+88
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.2137 - acc: 1.0000
+89
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.1869 - acc: 1.0000
+90
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.5005 - acc: 0.7000
+91
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.1659 - acc: 1.0000
+92
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.2794 - acc: 0.9500
+93
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.2359 - acc: 0.9500
+94
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.2029 - acc: 1.0000
+95
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.1788 - acc: 1.0000
+96
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.1603 - acc: 1.0000
+97
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.1525 - acc: 1.0000
+98
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.1449 - acc: 1.0000
+99
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.1365 - acc: 1.0000
+100
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.1240 - acc: 1.0000
+101
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.1116 - acc: 1.0000
+102
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.1377 - acc: 1.0000
+103
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.1275 - acc: 1.0000
+104
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.1006 - acc: 1.0000
+105
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0928 - acc: 1.0000
+106
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0846 - acc: 1.0000
+107
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0775 - acc: 1.0000
+108
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0712 - acc: 1.0000
+109
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0656 - acc: 1.0000
+110
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0608 - acc: 1.0000
+111
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.1271 - acc: 1.0000
+112
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.1168 - acc: 1.0000
+113
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.1068 - acc: 1.0000
+114
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0984 - acc: 1.0000
+115
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0584 - acc: 1.0000
+116
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0548 - acc: 1.0000
+117
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0510 - acc: 1.0000
+118
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0476 - acc: 1.0000
+119
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0444 - acc: 1.0000
+120
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0416 - acc: 1.0000
+121
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0391 - acc: 1.0000
+122
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0368 - acc: 1.0000
+123
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0348 - acc: 1.0000
+124
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0999 - acc: 1.0000
+125
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0925 - acc: 1.0000
+126
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 0.0335 - acc: 1.0000
+127
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0320 - acc: 1.0000
+128
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0859 - acc: 1.0000
+129
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0804 - acc: 1.0000
+130
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0748 - acc: 1.0000
+131
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0313 - acc: 1.0000
+132
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0699 - acc: 1.0000
+133
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0662 - acc: 1.0000
+134
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0304 - acc: 1.0000
+135
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0625 - acc: 1.0000
+136
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0595 - acc: 1.0000
+137
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0294 - acc: 1.0000
+138
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0564 - acc: 1.0000
+139
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0281 - acc: 1.0000
+140
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0268 - acc: 1.0000
+141
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0254 - acc: 1.0000
+142
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0549 - acc: 1.0000
+143
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0242 - acc: 1.0000
+144
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0231 - acc: 1.0000
+145
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0220 - acc: 1.0000
+146
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0209 - acc: 1.0000
+147
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0538 - acc: 1.0000
+148
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 0.0200 - acc: 1.0000
+149
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0192 - acc: 1.0000
+150
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0517 - acc: 1.0000
+151
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0494 - acc: 1.0000
+152
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0469 - acc: 1.0000
+153
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0190 - acc: 1.0000
+154
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0182 - acc: 1.0000
+155
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0449 - acc: 1.0000
+156
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0431 - acc: 1.0000
+157
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0412 - acc: 1.0000
+158
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0179 - acc: 1.0000
+159
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0394 - acc: 1.0000
+160
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0173 - acc: 1.0000
+161
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0380 - acc: 1.0000
+162
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0167 - acc: 1.0000
+163
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0160 - acc: 1.0000
+164
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0369 - acc: 1.0000
+165
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0154 - acc: 1.0000
+166
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0148 - acc: 1.0000
+167
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0359 - acc: 1.0000
+168
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0142 - acc: 1.0000
+169
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0137 - acc: 1.0000
+170
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0349 - acc: 1.0000
+171
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0131 - acc: 1.0000
+172
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0337 - acc: 1.0000
+173
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0127 - acc: 1.0000
+174
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0326 - acc: 1.0000
+175
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0315 - acc: 1.0000
+176
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0125 - acc: 1.0000
+177
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0303 - acc: 1.0000
+178
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0121 - acc: 1.0000
+179
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0117 - acc: 1.0000
+180
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0112 - acc: 1.0000
+181
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0107 - acc: 1.0000
+182
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0103 - acc: 1.0000
+183
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0099 - acc: 1.0000
+184
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0095 - acc: 1.0000
+185
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0091 - acc: 1.0000
+186
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0088 - acc: 1.0000
+187
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0306 - acc: 1.0000
+188
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0086 - acc: 1.0000
+189
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0295 - acc: 1.0000
+190
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0084 - acc: 1.0000
+191
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0285 - acc: 1.0000
+192
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0275 - acc: 1.0000
+193
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0083 - acc: 1.0000
+194
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0265 - acc: 1.0000
+195
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0256 - acc: 1.0000
+196
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0247 - acc: 1.0000
+197
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0239 - acc: 1.0000
+198
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0084 - acc: 1.0000
+199
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0231 - acc: 1.0000
+200
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0224 - acc: 1.0000
+201
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0083 - acc: 1.0000
+202
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0080 - acc: 1.0000
+203
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0218 - acc: 1.0000
+204
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0212 - acc: 1.0000
+205
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0206 - acc: 1.0000
+206
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0079 - acc: 1.0000
+207
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0076 - acc: 1.0000
+208
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0201 - acc: 1.0000
+209
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0195 - acc: 1.0000
+210
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0074 - acc: 1.0000
+211
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0190 - acc: 1.0000
+212
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0185 - acc: 1.0000
+213
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0072 - acc: 1.0000
+214
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0180 - acc: 1.0000
+215
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0070 - acc: 1.0000
+216
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0175 - acc: 1.0000
+217
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0171 - acc: 1.0000
+218
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0069 - acc: 1.0000
+219
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0166 - acc: 1.0000
+220
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0066 - acc: 1.0000
+221
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0064 - acc: 1.0000
+222
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0163 - acc: 1.0000
+223
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0061 - acc: 1.0000
+224
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0159 - acc: 1.0000
+225
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0060 - acc: 1.0000
+226
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 0.0155 - acc: 1.0000
+227
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0058 - acc: 1.0000
+228
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0151 - acc: 1.0000
+229
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0148 - acc: 1.0000
+230
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0056 - acc: 1.0000
+231
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0054 - acc: 1.0000
+232
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0052 - acc: 1.0000
+233
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0050 - acc: 1.0000
+234
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0145 - acc: 1.0000
+235
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0141 - acc: 1.0000
+236
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0049 - acc: 1.0000
+237
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0047 - acc: 1.0000
+238
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0046 - acc: 1.0000
+239
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0044 - acc: 1.0000
+240
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0139 - acc: 1.0000
+241
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0042 - acc: 1.0000
+242
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0041 - acc: 1.0000
+243
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0040 - acc: 1.0000
+244
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0038 - acc: 1.0000
+245
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0037 - acc: 1.0000
+246
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0036 - acc: 1.0000
+247
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0034 - acc: 1.0000
+248
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0033 - acc: 1.0000
+249
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0032 - acc: 1.0000
+250
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0139 - acc: 1.0000
+251
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0031 - acc: 1.0000
+252
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0031 - acc: 1.0000
+253
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0030 - acc: 1.0000
+254
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0029 - acc: 1.0000
+255
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0028 - acc: 1.0000
+256
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0136 - acc: 1.0000
+257
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0132 - acc: 1.0000
+258
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0028 - acc: 1.0000
+259
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0027 - acc: 1.0000
+260
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0026 - acc: 1.0000
+261
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0025 - acc: 1.0000
+262
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0128 - acc: 1.0000
+263
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0124 - acc: 1.0000
+264
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0025 - acc: 1.0000
+265
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0119 - acc: 1.0000
+266
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0116 - acc: 1.0000
+267
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0025 - acc: 1.0000
+268
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0111 - acc: 1.0000
+269
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0024 - acc: 1.0000
+270
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0108 - acc: 1.0000
+271
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0024 - acc: 1.0000
+272
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0105 - acc: 1.0000
+273
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0024 - acc: 1.0000
+274
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0101 - acc: 1.0000
+275
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0098 - acc: 1.0000
+276
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0023 - acc: 1.0000
+277
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0023 - acc: 1.0000
+278
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0095 - acc: 1.0000
+279
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0022 - acc: 1.0000
+280
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0092 - acc: 1.0000
+281
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0022 - acc: 1.0000
+282
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0090 - acc: 1.0000
+283
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0087 - acc: 1.0000
+284
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0022 - acc: 1.0000
+285
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0021 - acc: 1.0000
+286
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0020 - acc: 1.0000
+287
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0020 - acc: 1.0000
+288
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0019 - acc: 1.0000
+289
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0085 - acc: 1.0000
+290
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0082 - acc: 1.0000
+291
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0019 - acc: 1.0000
+292
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0018 - acc: 1.0000
+293
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0080 - acc: 1.0000
+294
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0077 - acc: 1.0000
+295
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0018 - acc: 1.0000
+296
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0018 - acc: 1.0000
+297
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0017 - acc: 1.0000
+298
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0075 - acc: 1.0000
+299
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0073 - acc: 1.0000
+300
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0017 - acc: 1.0000
+301
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0017 - acc: 1.0000
+302
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0016 - acc: 1.0000
+303
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0071 - acc: 1.0000
+304
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0016 - acc: 1.0000
+305
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0015 - acc: 1.0000
+306
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0015 - acc: 1.0000
+307
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0014 - acc: 1.0000
+308
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0014 - acc: 1.0000
+309
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0069 - acc: 1.0000
+310
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0067 - acc: 1.0000
+311
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0065 - acc: 1.0000
+312
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0063 - acc: 1.0000
+313
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0060 - acc: 1.0000
+314
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0014 - acc: 1.0000
+315
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0014 - acc: 1.0000
+316
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 0.0058 - acc: 1.0000
+317
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0057 - acc: 1.0000
+318
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0055 - acc: 1.0000
+319
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0014 - acc: 1.0000
+320
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0014 - acc: 1.0000
+321
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0013 - acc: 1.0000
+322
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0013 - acc: 1.0000
+323
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0054 - acc: 1.0000
+324
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0012 - acc: 1.0000
+325
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0012 - acc: 1.0000
+326
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0012 - acc: 1.0000
+327
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0011 - acc: 1.0000
+328
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0011 - acc: 1.0000
+329
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0011 - acc: 1.0000
+330
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0010 - acc: 1.0000
+331
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0010 - acc: 1.0000
+332
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.8750e-04 - acc: 1.0000
+333
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0053 - acc: 1.0000
+334
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.6969e-04 - acc: 1.0000
+335
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0051 - acc: 1.0000
+336
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 9.5712e-04 - acc: 1.0000
+337
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0049 - acc: 1.0000
+338
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 0.0048 - acc: 1.0000
+339
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0046 - acc: 1.0000
+340
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0044 - acc: 1.0000
+341
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.8537e-04 - acc: 1.0000
+342
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.6120e-04 - acc: 1.0000
+343
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.3359e-04 - acc: 1.0000
+344
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.0672e-04 - acc: 1.0000
+345
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.8104e-04 - acc: 1.0000
+346
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0043 - acc: 1.0000
+347
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.6518e-04 - acc: 1.0000
+348
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.4505e-04 - acc: 1.0000
+349
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0042 - acc: 1.0000
+350
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0040 - acc: 1.0000
+351
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.4255e-04 - acc: 1.0000
+352
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.2297e-04 - acc: 1.0000
+353
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 0.0039 - acc: 1.0000
+354
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0038 - acc: 1.0000
+355
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.1994e-04 - acc: 1.0000
+356
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0037 - acc: 1.0000
+357
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0036 - acc: 1.0000
+358
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.2009e-04 - acc: 1.0000
+359
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0034 - acc: 1.0000
+360
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.0779e-04 - acc: 1.0000
+361
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0033 - acc: 1.0000
+362
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.9504e-04 - acc: 1.0000
+363
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0032 - acc: 1.0000
+364
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0031 - acc: 1.0000
+365
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0030 - acc: 1.0000
+366
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0029 - acc: 1.0000
+367
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.1724e-04 - acc: 1.0000
+368
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0029 - acc: 1.0000
+369
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0028 - acc: 1.0000
+370
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.1392e-04 - acc: 1.0000
+371
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 0.0027 - acc: 1.0000
+372
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0026 - acc: 1.0000
+373
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0026 - acc: 1.0000
+374
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0025 - acc: 1.0000
+375
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0024 - acc: 1.0000
+376
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0023 - acc: 1.0000
+377
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.5648e-04 - acc: 1.0000
+378
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0023 - acc: 1.0000
+379
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0022 - acc: 1.0000
+380
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0022 - acc: 1.0000
+381
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.6059e-04 - acc: 1.0000
+382
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.3256e-04 - acc: 1.0000
+383
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.0131e-04 - acc: 1.0000
+384
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.7145e-04 - acc: 1.0000
+385
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0021 - acc: 1.0000
+386
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.4969e-04 - acc: 1.0000
+387
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0021 - acc: 1.0000
+388
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.3345e-04 - acc: 1.0000
+389
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0020 - acc: 1.0000
+390
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0020 - acc: 1.0000
+391
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0019 - acc: 1.0000
+392
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0019 - acc: 1.0000
+393
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.5085e-04 - acc: 1.0000
+394
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.2719e-04 - acc: 1.0000
+395
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0018 - acc: 1.0000
+396
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.0686e-04 - acc: 1.0000
+397
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0018 - acc: 1.0000
+398
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0017 - acc: 1.0000
+399
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.0137e-04 - acc: 1.0000
+400
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0017 - acc: 1.0000
+401
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.8576e-04 - acc: 1.0000
+402
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.6375e-04 - acc: 1.0000
+403
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0016 - acc: 1.0000
+404
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0016 - acc: 1.0000
+405
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0016 - acc: 1.0000
+406
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0015 - acc: 1.0000
+407
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.7543e-04 - acc: 1.0000
+408
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.5308e-04 - acc: 1.0000
+409
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.2809e-04 - acc: 1.0000
+410
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0015 - acc: 1.0000
+411
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.1011e-04 - acc: 1.0000
+412
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.9104e-04 - acc: 1.0000
+413
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.7002e-04 - acc: 1.0000
+414
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0014 - acc: 1.0000
+415
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0014 - acc: 1.0000
+416
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0014 - acc: 1.0000
+417
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0013 - acc: 1.0000
+418
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0013 - acc: 1.0000
+419
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0013 - acc: 1.0000
+420
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0012 - acc: 1.0000
+421
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0012 - acc: 1.0000
+422
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0012 - acc: 1.0000
+423
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.3068e-04 - acc: 1.0000
+424
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.0806e-04 - acc: 1.0000
+425
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0012 - acc: 1.0000
+426
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0011 - acc: 1.0000
+427
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0011 - acc: 1.0000
+428
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.0641e-04 - acc: 1.0000
+429
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 5.8459e-04 - acc: 1.0000
+430
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.6025e-04 - acc: 1.0000
+431
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.3719e-04 - acc: 1.0000
+432
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0011 - acc: 1.0000
+433
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.2066e-04 - acc: 1.0000
+434
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0010 - acc: 1.0000
+435
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0010 - acc: 1.0000
+436
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 0.0010 - acc: 1.0000
+437
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.7800e-04 - acc: 1.0000
+438
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.3424e-04 - acc: 1.0000
+439
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.5323e-04 - acc: 1.0000
+440
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.3291e-04 - acc: 1.0000
+441
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.2898e-04 - acc: 1.0000
+442
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.0973e-04 - acc: 1.0000
+443
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.1509e-04 - acc: 1.0000
+444
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.9639e-04 - acc: 1.0000
+445
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.7592e-04 - acc: 1.0000
+446
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 4.5658e-04 - acc: 1.0000
+447
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.3845e-04 - acc: 1.0000
+448
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.2151e-04 - acc: 1.0000
+449
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.0583e-04 - acc: 1.0000
+450
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.8573e-04 - acc: 1.0000
+451
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.6606e-04 - acc: 1.0000
+452
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.4535e-04 - acc: 1.0000
+453
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.2520e-04 - acc: 1.0000
+454
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.1699e-04 - acc: 1.0000
+455
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.0369e-04 - acc: 1.0000
+456
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.0831e-04 - acc: 1.0000
+457
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.8434e-04 - acc: 1.0000
+458
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 7.6729e-04 - acc: 1.0000
+459
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.0581e-04 - acc: 1.0000
+460
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.9243e-04 - acc: 1.0000
+461
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.7736e-04 - acc: 1.0000
+462
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.4645e-04 - acc: 1.0000
+463
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.6650e-04 - acc: 1.0000
+464
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.2845e-04 - acc: 1.0000
+465
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.5858e-04 - acc: 1.0000
+466
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.4719e-04 - acc: 1.0000
+467
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.1008e-04 - acc: 1.0000
+468
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.3797e-04 - acc: 1.0000
+469
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.2750e-04 - acc: 1.0000
+470
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.9215e-04 - acc: 1.0000
+471
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.1921e-04 - acc: 1.0000
+472
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.7513e-04 - acc: 1.0000
+473
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.1306e-04 - acc: 1.0000
+474
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.0359e-04 - acc: 1.0000
+475
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.5777e-04 - acc: 1.0000
+476
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.9626e-04 - acc: 1.0000
+477
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.8746e-04 - acc: 1.0000
+478
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.4085e-04 - acc: 1.0000
+479
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.8080e-04 - acc: 1.0000
+480
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.7265e-04 - acc: 1.0000
+481
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.2423e-04 - acc: 1.0000
+482
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.1011e-04 - acc: 1.0000
+483
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 5.9531e-04 - acc: 1.0000
+484
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.7442e-04 - acc: 1.0000
+485
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.6637e-04 - acc: 1.0000
+486
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.7860e-04 - acc: 1.0000
+487
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.5938e-04 - acc: 1.0000
+488
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.6419e-04 - acc: 1.0000
+489
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.5154e-04 - acc: 1.0000
+490
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.5766e-04 - acc: 1.0000
+491
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.3684e-04 - acc: 1.0000
+492
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.5230e-04 - acc: 1.0000
+493
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.4472e-04 - acc: 1.0000
+494
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.2290e-04 - acc: 1.0000
+495
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.3828e-04 - acc: 1.0000
+496
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.0995e-04 - acc: 1.0000
+497
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.3338e-04 - acc: 1.0000
+498
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.2652e-04 - acc: 1.0000
+499
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.1886e-04 - acc: 1.0000
+500
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.1151e-04 - acc: 1.0000
+501
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.0455e-04 - acc: 1.0000
+502
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 4.9541e-04 - acc: 1.0000
+503
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.8409e-04 - acc: 1.0000
+504
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.0277e-04 - acc: 1.0000
+505
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.7077e-04 - acc: 1.0000
+506
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.6006e-04 - acc: 1.0000
+507
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.0219e-04 - acc: 1.0000
+508
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.9657e-04 - acc: 1.0000
+509
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.9016e-04 - acc: 1.0000
+510
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.4663e-04 - acc: 1.0000
+511
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.3653e-04 - acc: 1.0000
+512
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.8842e-04 - acc: 1.0000
+513
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.8326e-04 - acc: 1.0000
+514
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.7739e-04 - acc: 1.0000
+515
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.7169e-04 - acc: 1.0000
+516
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.2336e-04 - acc: 1.0000
+517
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.6791e-04 - acc: 1.0000
+518
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.6351e-04 - acc: 1.0000
+519
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.5855e-04 - acc: 1.0000
+520
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 4.1168e-04 - acc: 1.0000
+521
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.0209e-04 - acc: 1.0000
+522
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.5772e-04 - acc: 1.0000
+523
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.9077e-04 - acc: 1.0000
+524
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.5534e-04 - acc: 1.0000
+525
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.8057e-04 - acc: 1.0000
+526
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.5289e-04 - acc: 1.0000
+527
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.7068e-04 - acc: 1.0000
+528
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.5045e-04 - acc: 1.0000
+529
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.6107e-04 - acc: 1.0000
+530
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.4801e-04 - acc: 1.0000
+531
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.5173e-04 - acc: 1.0000
+532
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.4369e-04 - acc: 1.0000
+533
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.3534e-04 - acc: 1.0000
+534
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.2723e-04 - acc: 1.0000
+535
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.1943e-04 - acc: 1.0000
+536
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.1192e-04 - acc: 1.0000
+537
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.5719e-04 - acc: 1.0000
+538
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.0367e-04 - acc: 1.0000
+539
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.9713e-04 - acc: 1.0000
+540
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.5615e-04 - acc: 1.0000
+541
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.8943e-04 - acc: 1.0000
+542
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.8327e-04 - acc: 1.0000
+543
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.7694e-04 - acc: 1.0000
+544
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.5723e-04 - acc: 1.0000
+545
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.6986e-04 - acc: 1.0000
+546
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.5348e-04 - acc: 1.0000
+547
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.4840e-04 - acc: 1.0000
+548
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.6283e-04 - acc: 1.0000
+549
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.5735e-04 - acc: 1.0000
+550
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.4602e-04 - acc: 1.0000
+551
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.4134e-04 - acc: 1.0000
+552
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 2.5032e-04 - acc: 1.0000
+553
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.4512e-04 - acc: 1.0000
+554
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.3975e-04 - acc: 1.0000
+555
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.4117e-04 - acc: 1.0000
+556
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.3656e-04 - acc: 1.0000
+557
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.3135e-04 - acc: 1.0000
+558
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.2637e-04 - acc: 1.0000
+559
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.3230e-04 - acc: 1.0000
+560
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.2746e-04 - acc: 1.0000
+561
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.2451e-04 - acc: 1.0000
+562
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.2169e-04 - acc: 1.0000
+563
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.1707e-04 - acc: 1.0000
+564
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.1234e-04 - acc: 1.0000
+565
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.2536e-04 - acc: 1.0000
+566
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.0701e-04 - acc: 1.0000
+567
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.0278e-04 - acc: 1.0000
+568
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.9846e-04 - acc: 1.0000
+569
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 1.2591e-04 - acc: 1.0000
+570
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.2163e-04 - acc: 1.0000
+571
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.1684e-04 - acc: 1.0000
+572
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.1225e-04 - acc: 1.0000
+573
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.9224e-04 - acc: 1.0000
+574
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.8833e-04 - acc: 1.0000
+575
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.1041e-04 - acc: 1.0000
+576
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.8364e-04 - acc: 1.0000
+577
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.0784e-04 - acc: 1.0000
+578
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.0435e-04 - acc: 1.0000
+579
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.0049e-04 - acc: 1.0000
+580
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.6787e-05 - acc: 1.0000
+581
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.3319e-05 - acc: 1.0000
+582
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.0049e-05 - acc: 1.0000
+583
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 1.7752e-04 - acc: 1.0000
+584
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.7381e-04 - acc: 1.0000
+585
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.9085e-05 - acc: 1.0000
+586
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.6937e-04 - acc: 1.0000
+587
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.6584e-04 - acc: 1.0000
+588
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.8571e-05 - acc: 1.0000
+589
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.5968e-05 - acc: 1.0000
+590
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.3020e-05 - acc: 1.0000
+591
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.0190e-05 - acc: 1.0000
+592
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.6069e-04 - acc: 1.0000
+593
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.5733e-04 - acc: 1.0000
+594
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.9212e-05 - acc: 1.0000
+595
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.5329e-04 - acc: 1.0000
+596
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.5009e-04 - acc: 1.0000
+597
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.4680e-04 - acc: 1.0000
+598
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.9709e-05 - acc: 1.0000
+599
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.4308e-04 - acc: 1.0000
+600
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.4015e-04 - acc: 1.0000
+601
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.3715e-04 - acc: 1.0000
+602
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.0108e-05 - acc: 1.0000
+603
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.3373e-04 - acc: 1.0000
+604
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.8250e-05 - acc: 1.0000
+605
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.3059e-04 - acc: 1.0000
+606
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.6372e-05 - acc: 1.0000
+607
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.2752e-04 - acc: 1.0000
+608
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.2497e-04 - acc: 1.0000
+609
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.5528e-05 - acc: 1.0000
+610
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.2191e-04 - acc: 1.0000
+611
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.3703e-05 - acc: 1.0000
+612
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.1345e-05 - acc: 1.0000
+613
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.1876e-04 - acc: 1.0000
+614
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.9228e-05 - acc: 1.0000
+615
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.7049e-05 - acc: 1.0000
+616
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.4664e-05 - acc: 1.0000
+617
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.1546e-04 - acc: 1.0000
+618
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.2848e-05 - acc: 1.0000
+619
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.0970e-05 - acc: 1.0000
+620
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.8910e-05 - acc: 1.0000
+621
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.6936e-05 - acc: 1.0000
+622
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.1205e-04 - acc: 1.0000
+623
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.0976e-04 - acc: 1.0000
+624
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.0737e-04 - acc: 1.0000
+625
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.7121e-05 - acc: 1.0000
+626
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.0466e-04 - acc: 1.0000
+627
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.0254e-04 - acc: 1.0000
+628
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.6787e-05 - acc: 1.0000
+629
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.5144e-05 - acc: 1.0000
+630
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.9753e-05 - acc: 1.0000
+631
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.3701e-05 - acc: 1.0000
+632
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.2157e-05 - acc: 1.0000
+633
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 9.7184e-05 - acc: 1.0000
+634
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.0860e-05 - acc: 1.0000
+635
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.4899e-05 - acc: 1.0000
+636
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.2977e-05 - acc: 1.0000
+637
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.0998e-05 - acc: 1.0000
+638
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.1313e-05 - acc: 1.0000
+639
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.9834e-05 - acc: 1.0000
+640
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.8522e-05 - acc: 1.0000
+641
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.8541e-05 - acc: 1.0000
+642
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.6457e-05 - acc: 1.0000
+643
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 4.7551e-05 - acc: 1.0000
+644
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.4428e-05 - acc: 1.0000
+645
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.6606e-05 - acc: 1.0000
+646
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.5252e-05 - acc: 1.0000
+647
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.2264e-05 - acc: 1.0000
+648
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.4132e-05 - acc: 1.0000
+649
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.0345e-05 - acc: 1.0000
+650
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.3285e-05 - acc: 1.0000
+651
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.8460e-05 - acc: 1.0000
+652
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.6889e-05 - acc: 1.0000
+653
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.5272e-05 - acc: 1.0000
+654
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.3695e-05 - acc: 1.0000
+655
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.4316e-05 - acc: 1.0000
+656
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 7.1892e-05 - acc: 1.0000
+657
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.0487e-05 - acc: 1.0000
+658
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.3958e-05 - acc: 1.0000
+659
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.2599e-05 - acc: 1.0000
+660
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.8604e-05 - acc: 1.0000
+661
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.1439e-05 - acc: 1.0000
+662
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.0205e-05 - acc: 1.0000
+663
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.6871e-05 - acc: 1.0000
+664
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.5570e-05 - acc: 1.0000
+665
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 3.9728e-05 - acc: 1.0000
+666
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.8602e-05 - acc: 1.0000
+667
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.3828e-05 - acc: 1.0000
+668
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.7624e-05 - acc: 1.0000
+669
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.6527e-05 - acc: 1.0000
+670
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 6.2217e-05 - acc: 1.0000
+671
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 6.1003e-05 - acc: 1.0000
+672
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 5.9747e-05 - acc: 1.0000
+673
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.8521e-05 - acc: 1.0000
+674
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.7332e-05 - acc: 1.0000
+675
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.6178e-05 - acc: 1.0000
+676
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.8315e-05 - acc: 1.0000
+677
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.4841e-05 - acc: 1.0000
+678
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.7451e-05 - acc: 1.0000
+679
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.3597e-05 - acc: 1.0000
+680
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.6553e-05 - acc: 1.0000
+681
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.2384e-05 - acc: 1.0000
+682
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.1395e-05 - acc: 1.0000
+683
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.6208e-05 - acc: 1.0000
+684
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.0187e-05 - acc: 1.0000
+685
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.9246e-05 - acc: 1.0000
+686
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.5832e-05 - acc: 1.0000
+687
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.4687e-05 - acc: 1.0000
+688
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.3388e-05 - acc: 1.0000
+689
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 4.7803e-05 - acc: 1.0000
+690
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.2416e-05 - acc: 1.0000
+691
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.1415e-05 - acc: 1.0000
+692
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 4.6594e-05 - acc: 1.0000
+693
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.5718e-05 - acc: 1.0000
+694
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.4818e-05 - acc: 1.0000
+695
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 4.3953e-05 - acc: 1.0000
+696
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.1838e-05 - acc: 1.0000
+697
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.0854e-05 - acc: 1.0000
+698
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.9710e-05 - acc: 1.0000
+699
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.2698e-05 - acc: 1.0000
+700
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.1917e-05 - acc: 1.0000
+701
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.1116e-05 - acc: 1.0000
+702
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.0332e-05 - acc: 1.0000
+703
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.9569e-05 - acc: 1.0000
+704
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.0276e-05 - acc: 1.0000
+705
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 3.8670e-05 - acc: 1.0000
+706
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.7977e-05 - acc: 1.0000
+707
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.9841e-05 - acc: 1.0000
+708
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.7123e-05 - acc: 1.0000
+709
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 3.6463e-05 - acc: 1.0000
+710
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 3.5797e-05 - acc: 1.0000
+711
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 3.5147e-05 - acc: 1.0000
+712
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 3.0088e-05 - acc: 1.0000
+713
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 2.9051e-05 - acc: 1.0000
+714
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 2.7900e-05 - acc: 1.0000
+715
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 3.4126e-05 - acc: 1.0000
+716
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 2.6988e-05 - acc: 1.0000
+717
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 3.3394e-05 - acc: 1.0000
+718
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 3.2806e-05 - acc: 1.0000
+719
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 3.2212e-05 - acc: 1.0000
+720
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 3.1631e-05 - acc: 1.0000
+721
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 2.7203e-05 - acc: 1.0000
+722
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 3.0931e-05 - acc: 1.0000
+723
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 3.0395e-05 - acc: 1.0000
+724
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 2.6749e-05 - acc: 1.0000
+725
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.5843e-05 - acc: 1.0000
+726
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.9621e-05 - acc: 1.0000
+727
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 2.9110e-05 - acc: 1.0000
+728
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.8594e-05 - acc: 1.0000
+729
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 2.5557e-05 - acc: 1.0000
+730
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 2.7968e-05 - acc: 1.0000
+731
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.7488e-05 - acc: 1.0000
+732
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.7008e-05 - acc: 1.0000
+733
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.5408e-05 - acc: 1.0000
+734
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.6420e-05 - acc: 1.0000
+735
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.5971e-05 - acc: 1.0000
+736
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.5523e-05 - acc: 1.0000
+737
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.5223e-05 - acc: 1.0000
+738
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 2.4971e-05 - acc: 1.0000
+739
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.4478e-05 - acc: 1.0000
+740
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.4441e-05 - acc: 1.0000
+741
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.3745e-05 - acc: 1.0000
+742
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.2898e-05 - acc: 1.0000
+743
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.1963e-05 - acc: 1.0000
+744
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.3740e-05 - acc: 1.0000
+745
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.3338e-05 - acc: 1.0000
+746
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.2934e-05 - acc: 1.0000
+747
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.2539e-05 - acc: 1.0000
+748
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.2152e-05 - acc: 1.0000
+749
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.1775e-05 - acc: 1.0000
+750
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.2475e-05 - acc: 1.0000
+751
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.1605e-05 - acc: 1.0000
+752
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.1221e-05 - acc: 1.0000
+753
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.0788e-05 - acc: 1.0000
+754
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.0777e-05 - acc: 1.0000
+755
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.0430e-05 - acc: 1.0000
+756
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.0085e-05 - acc: 1.0000
+757
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.9747e-05 - acc: 1.0000
+758
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.0818e-05 - acc: 1.0000
+759
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.0025e-05 - acc: 1.0000
+760
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.9246e-05 - acc: 1.0000
+761
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.8928e-05 - acc: 1.0000
+762
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.8612e-05 - acc: 1.0000
+763
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.9650e-05 - acc: 1.0000
+764
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 1.8219e-05 - acc: 1.0000
+765
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 1.8976e-05 - acc: 1.0000
+766
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.8225e-05 - acc: 1.0000
+767
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.7767e-05 - acc: 1.0000
+768
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.7504e-05 - acc: 1.0000
+769
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.7401e-05 - acc: 1.0000
+770
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.6952e-05 - acc: 1.0000
+771
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.6332e-05 - acc: 1.0000
+772
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.6981e-05 - acc: 1.0000
+773
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.6703e-05 - acc: 1.0000
+774
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.6422e-05 - acc: 1.0000
+775
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.6147e-05 - acc: 1.0000
+776
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.6326e-05 - acc: 1.0000
+777
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.5736e-05 - acc: 1.0000
+778
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 1.5075e-05 - acc: 1.0000
+779
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.5692e-05 - acc: 1.0000
+780
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.4550e-05 - acc: 1.0000
+781
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.5375e-05 - acc: 1.0000
+782
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.4121e-05 - acc: 1.0000
+783
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.5063e-05 - acc: 1.0000
+784
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.4817e-05 - acc: 1.0000
+785
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.4568e-05 - acc: 1.0000
+786
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.4061e-05 - acc: 1.0000
+787
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.3596e-05 - acc: 1.0000
+788
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.3054e-05 - acc: 1.0000
+789
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.4165e-05 - acc: 1.0000
+790
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.2619e-05 - acc: 1.0000
+791
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.3880e-05 - acc: 1.0000
+792
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.3653e-05 - acc: 1.0000
+793
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.3422e-05 - acc: 1.0000
+794
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.2589e-05 - acc: 1.0000
+795
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.2178e-05 - acc: 1.0000
+796
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.3096e-05 - acc: 1.0000
+797
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.1778e-05 - acc: 1.0000
+798
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.1403e-05 - acc: 1.0000
+799
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.2791e-05 - acc: 1.0000
+800
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.1045e-05 - acc: 1.0000
+801
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.2534e-05 - acc: 1.0000
+802
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.2328e-05 - acc: 1.0000
+803
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.0902e-05 - acc: 1.0000
+804
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.0562e-05 - acc: 1.0000
+805
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.0193e-05 - acc: 1.0000
+806
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.1995e-05 - acc: 1.0000
+807
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 9.8947e-06 - acc: 1.0000
+808
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 9.6026e-06 - acc: 1.0000
+809
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.1720e-05 - acc: 1.0000
+810
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 9.3463e-06 - acc: 1.0000
+811
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.0959e-06 - acc: 1.0000
+812
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 8.7860e-06 - acc: 1.0000
+813
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 8.5177e-06 - acc: 1.0000
+814
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 8.2734e-06 - acc: 1.0000
+815
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.0111e-06 - acc: 1.0000
+816
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.7727e-06 - acc: 1.0000
+817
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.5581e-06 - acc: 1.0000
+818
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.3375e-06 - acc: 1.0000
+819
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.1267e-05 - acc: 1.0000
+820
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 7.1885e-06 - acc: 1.0000
+821
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 7.0395e-06 - acc: 1.0000
+822
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.1010e-05 - acc: 1.0000
+823
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.9084e-06 - acc: 1.0000
+824
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 6.7534e-06 - acc: 1.0000
+825
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 1.0757e-05 - acc: 1.0000
+826
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.6342e-06 - acc: 1.0000
+827
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.0532e-05 - acc: 1.0000
+828
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 6.5447e-06 - acc: 1.0000
+829
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 6.4076e-06 - acc: 1.0000
+830
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 1.0286e-05 - acc: 1.0000
+831
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.0103e-05 - acc: 1.0000
+832
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 9.9115e-06 - acc: 1.0000
+833
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.7233e-06 - acc: 1.0000
+834
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.5401e-06 - acc: 1.0000
+835
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.3619e-06 - acc: 1.0000
+836
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 9.1887e-06 - acc: 1.0000
+837
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.8189e-06 - acc: 1.0000
+838
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.9836e-06 - acc: 1.0000
+839
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.8289e-06 - acc: 1.0000
+840
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.7832e-06 - acc: 1.0000
+841
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.6339e-06 - acc: 1.0000
+842
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.4861e-06 - acc: 1.0000
+843
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.7474e-06 - acc: 1.0000
+844
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.5566e-06 - acc: 1.0000
+845
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.3719e-06 - acc: 1.0000
+846
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.1692e-06 - acc: 1.0000
+847
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.9844e-06 - acc: 1.0000
+848
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.8116e-06 - acc: 1.0000
+849
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 8.1816e-06 - acc: 1.0000
+850
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 8.0397e-06 - acc: 1.0000
+851
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 5.7579e-06 - acc: 1.0000
+852
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 5.6089e-06 - acc: 1.0000
+853
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 7.8375e-06 - acc: 1.0000
+854
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.5076e-06 - acc: 1.0000
+855
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.6717e-06 - acc: 1.0000
+856
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.4241e-06 - acc: 1.0000
+857
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.2811e-06 - acc: 1.0000
+858
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.1499e-06 - acc: 1.0000
+859
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 7.4677e-06 - acc: 1.0000
+860
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 7.3365e-06 - acc: 1.0000
+861
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 7.1993e-06 - acc: 1.0000
+862
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.1738e-06 - acc: 1.0000
+863
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.0546e-06 - acc: 1.0000
+864
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 7.0148e-06 - acc: 1.0000
+865
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.8923e-06 - acc: 1.0000
+866
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 5.0188e-06 - acc: 1.0000
+867
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.7363e-06 - acc: 1.0000
+868
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.9473e-06 - acc: 1.0000
+869
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.8102e-06 - acc: 1.0000
+870
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.6969e-06 - acc: 1.0000
+871
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 4.5419e-06 - acc: 1.0000
+872
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.5411e-06 - acc: 1.0000
+873
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.4289e-06 - acc: 1.0000
+874
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 4.5181e-06 - acc: 1.0000
+875
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 4.4048e-06 - acc: 1.0000
+876
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 4.2797e-06 - acc: 1.0000
+877
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 6.2528e-06 - acc: 1.0000
+878
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 6.1449e-06 - acc: 1.0000
+879
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 6.0317e-06 - acc: 1.0000
+880
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.3274e-06 - acc: 1.0000
+881
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.8960e-06 - acc: 1.0000
+882
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 5.7944e-06 - acc: 1.0000
+883
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.6895e-06 - acc: 1.0000
+884
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.4048e-06 - acc: 1.0000
+885
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.5623e-06 - acc: 1.0000
+886
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.3035e-06 - acc: 1.0000
+887
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 4.2022e-06 - acc: 1.0000
+888
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 4.0651e-06 - acc: 1.0000
+889
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 3.9459e-06 - acc: 1.0000
+890
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.3949e-06 - acc: 1.0000
+891
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.8624e-06 - acc: 1.0000
+892
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.2809e-06 - acc: 1.0000
+893
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.8088e-06 - acc: 1.0000
+894
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.7075e-06 - acc: 1.0000
+895
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.6002e-06 - acc: 1.0000
+896
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 5.1391e-06 - acc: 1.0000
+897
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.5406e-06 - acc: 1.0000
+898
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.4631e-06 - acc: 1.0000
+899
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.3737e-06 - acc: 1.0000
+900
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.2783e-06 - acc: 1.0000
+901
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.9902e-06 - acc: 1.0000
+902
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.2306e-06 - acc: 1.0000
+903
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.1591e-06 - acc: 1.0000
+904
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.0756e-06 - acc: 1.0000
+905
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.8583e-06 - acc: 1.0000
+906
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.7713e-06 - acc: 1.0000
+907
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.0697e-06 - acc: 1.0000
+908
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.0160e-06 - acc: 1.0000
+909
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.6479e-06 - acc: 1.0000
+910
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.5647e-06 - acc: 1.0000
+911
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.4775e-06 - acc: 1.0000
+912
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.3921e-06 - acc: 1.0000
+913
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.3091e-06 - acc: 1.0000
+914
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.2284e-06 - acc: 1.0000
+915
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.2068e-06 - acc: 1.0000
+916
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.1312e-06 - acc: 1.0000
+917
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 4.0591e-06 - acc: 1.0000
+918
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.1948e-06 - acc: 1.0000
+919
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 3.1233e-06 - acc: 1.0000
+920
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.0339e-06 - acc: 1.0000
+921
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 2.9326e-06 - acc: 1.0000
+922
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.8372e-06 - acc: 1.0000
+923
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 3.9140e-06 - acc: 1.0000
+924
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.8460e-06 - acc: 1.0000
+925
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 3.7763e-06 - acc: 1.0000
+926
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 2.8610e-06 - acc: 1.0000
+927
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 2.7836e-06 - acc: 1.0000
+928
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.7001e-06 - acc: 1.0000
+929
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.6286e-06 - acc: 1.0000
+930
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.5630e-06 - acc: 1.0000
+931
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 3.6484e-06 - acc: 1.0000
+932
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.5853e-06 - acc: 1.0000
+933
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.5392e-06 - acc: 1.0000
+934
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.5048e-06 - acc: 1.0000
+935
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.4441e-06 - acc: 1.0000
+936
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.3816e-06 - acc: 1.0000
+937
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.3210e-06 - acc: 1.0000
+938
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.2621e-06 - acc: 1.0000
+939
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.6643e-06 - acc: 1.0000
+940
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.1904e-06 - acc: 1.0000
+941
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.6286e-06 - acc: 1.0000
+942
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.1234e-06 - acc: 1.0000
+943
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 3.0713e-06 - acc: 1.0000
+944
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.6107e-06 - acc: 1.0000
+945
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.5451e-06 - acc: 1.0000
+946
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.4617e-06 - acc: 1.0000
+947
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 2.9825e-06 - acc: 1.0000
+948
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 2.9330e-06 - acc: 1.0000
+949
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.8822e-06 - acc: 1.0000
+950
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.4855e-06 - acc: 1.0000
+951
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.8193e-06 - acc: 1.0000
+952
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.4498e-06 - acc: 1.0000
+953
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.3544e-06 - acc: 1.0000
+954
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.2888e-06 - acc: 1.0000
+955
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.7395e-06 - acc: 1.0000
+956
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.6942e-06 - acc: 1.0000
+957
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.6478e-06 - acc: 1.0000
+958
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.3008e-06 - acc: 1.0000
+959
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.2411e-06 - acc: 1.0000
+960
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.5801e-06 - acc: 1.0000
+961
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.5378e-06 - acc: 1.0000
+962
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.2173e-06 - acc: 1.0000
+963
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.4829e-06 - acc: 1.0000
+964
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.4427e-06 - acc: 1.0000
+965
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 2.4023e-06 - acc: 1.0000
+966
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.3626e-06 - acc: 1.0000
+967
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.3239e-06 - acc: 1.0000
+968
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 2.2862e-06 - acc: 1.0000
+969
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.3306e-06 - acc: 1.0000
+970
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 2.2769e-06 - acc: 1.0000
+971
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 2.1756e-06 - acc: 1.0000
+972
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.0981e-06 - acc: 1.0000
+973
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 2.0266e-06 - acc: 1.0000
+974
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.1998e-06 - acc: 1.0000
+975
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.9848e-06 - acc: 1.0000
+976
+Epoch 1/1
+20/20 [==============================] - 0s 5ms/step - loss: 2.1551e-06 - acc: 1.0000
+977
+Epoch 1/1
+20/20 [==============================] - 0s 6ms/step - loss: 1.9431e-06 - acc: 1.0000
+978
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.9014e-06 - acc: 1.0000
+979
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.1027e-06 - acc: 1.0000
+980
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 2.0691e-06 - acc: 1.0000
+981
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 1.8716e-06 - acc: 1.0000
+982
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 2.0258e-06 - acc: 1.0000
+983
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 1.8358e-06 - acc: 1.0000
+984
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 1.8001e-06 - acc: 1.0000
+985
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.7345e-06 - acc: 1.0000
+986
+Epoch 1/1
+20/20 [==============================] - 0s 3ms/step - loss: 1.9688e-06 - acc: 1.0000
+987
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.6868e-06 - acc: 1.0000
+988
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.9289e-06 - acc: 1.0000
+989
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.8980e-06 - acc: 1.0000
+990
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.8669e-06 - acc: 1.0000
+991
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.7107e-06 - acc: 1.0000
+992
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.8279e-06 - acc: 1.0000
+993
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.6689e-06 - acc: 1.0000
+994
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.7907e-06 - acc: 1.0000
+995
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.7624e-06 - acc: 1.0000
+996
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.7340e-06 - acc: 1.0000
+997
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.7067e-06 - acc: 1.0000
+998
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.6928e-06 - acc: 1.0000
+999
+Epoch 1/1
+20/20 [==============================] - 0s 4ms/step - loss: 1.6720e-06 - acc: 1.0000
+1000
+Epoch 1/1
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        AttributeError                            Traceback (most recent call last)
+
+        <ipython-input-12-224afacd1c37> in <module>
+          9     print(i)
+         10     model.fit(X\_train\_split\_2[i*N\_bits:(i+1)*N\_bits].reshape(-1,window\_length,1), 
+    ---> 11               y\_train\_split\_2[i*N\_bits:(i+1)*N\_bits], batch\_size=batch\_size, epochs=1, shuffle=False, verbose=1)
+         12     model.reset\_states()
+         13 score, acc = model.evaluate(X\_validation\_split\_2.reshape(-1,window\_length,1), y\_validation\_split\_2, batch\_size=1, verbose=1)
+
+
+        \textasciitilde{}/anaconda3/envs/self-driving-car-model/lib/python3.6/site-packages/keras/engine/training.py in fit(self, x, y, batch\_size, epochs, verbose, callbacks, validation\_split, validation\_data, shuffle, class\_weight, sample\_weight, initial\_epoch, steps\_per\_epoch, validation\_steps, **kwargs)
+       1037                                         initial\_epoch=initial\_epoch,
+       1038                                         steps\_per\_epoch=steps\_per\_epoch,
+    -> 1039                                         validation\_steps=validation\_steps)
+       1040 
+       1041     def evaluate(self, x=None, y=None,
+
+
+        \textasciitilde{}/anaconda3/envs/self-driving-car-model/lib/python3.6/site-packages/keras/engine/training\_arrays.py in fit\_loop(model, f, ins, out\_labels, batch\_size, epochs, verbose, callbacks, val\_f, val\_ins, shuffle, callback\_metrics, initial\_epoch, steps\_per\_epoch, validation\_steps)
+        215                         for l, o in zip(out\_labels, val\_outs):
+        216                             epoch\_logs['val\_' + l] = o
+    --> 217         callbacks.on\_epoch\_end(epoch, epoch\_logs)
+        218         if callback\_model.stop\_training:
+        219             break
+
+
+        \textasciitilde{}/anaconda3/envs/self-driving-car-model/lib/python3.6/site-packages/keras/callbacks.py in on\_epoch\_end(self, epoch, logs)
+         77         logs = logs or \{\}
+         78         for callback in self.callbacks:
+    ---> 79             callback.on\_epoch\_end(epoch, logs)
+         80 
+         81     def on\_batch\_begin(self, batch, logs=None):
+
+
+        \textasciitilde{}/anaconda3/envs/self-driving-car-model/lib/python3.6/site-packages/keras/callbacks.py in on\_epoch\_end(self, epoch, logs)
+        336                 self.log\_values.append((k, logs[k]))
+        337         if self.verbose:
+    --> 338             self.progbar.update(self.seen, self.log\_values)
+        339 
+        340 
+
+
+        AttributeError: 'ProgbarLogger' object has no attribute 'log\_values'
+
+    \end{Verbatim}
+
+    \hypertarget{batch-size-1000-y-reshape-del-dataset}{%
+\subsection{Batch size = 1000 y reshape del
+dataset}\label{batch-size-1000-y-reshape-del-dataset}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{l+m+mi}{1000}
+         \PY{n}{X\PYZus{}train\PYZus{}split}\PY{p}{,} \PY{n}{y\PYZus{}train\PYZus{}split} \PY{o}{=} \PY{n}{prepare\PYZus{}sequences}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{N} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}split}\PY{p}{)}
+         \PY{n}{frac} \PY{o}{=} \PY{n}{N}\PY{o}{/}\PY{n}{batch\PYZus{}size}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{N}\PY{p}{,} \PY{n}{frac}\PY{p}{)}
+         \PY{n}{X\PYZus{}train\PYZus{}split\PYZus{}reshaped} \PY{o}{=} \PY{n}{X\PYZus{}train\PYZus{}split}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{batch\PYZus{}size}\PY{p}{,}\PY{n+nb}{int}\PY{p}{(}\PY{n}{frac}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{T}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{N}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{y\PYZus{}train\PYZus{}split\PYZus{}reshaped} \PY{o}{=} \PY{n}{y\PYZus{}train\PYZus{}split}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{batch\PYZus{}size}\PY{p}{,}\PY{n+nb}{int}\PY{p}{(}\PY{n}{frac}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{T}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{N}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}split}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}split\PYZus{}reshaped}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+20000 20.0
+(20000, 1)
+(20000, 1, 1)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{layers} \PY{k}{import} \PY{n}{SimpleRNN}\PY{p}{,} \PY{n}{Dense}\PY{p}{,} \PY{n}{LSTM}
+         \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{models} \PY{k}{import} \PY{n}{Sequential}
+         \PY{n}{model} \PY{o}{=} \PY{n}{Sequential}\PY{p}{(}\PY{p}{)}
+         \PY{n}{model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{LSTM}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{batch\PYZus{}input\PYZus{}shape}\PY{o}{=}\PY{p}{(}\PY{n}{batch\PYZus{}size}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{return\PYZus{}sequences}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{stateful}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{)}
+         \PY{n}{model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigmoid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         \PY{n}{model}\PY{o}{.}\PY{n}{compile}\PY{p}{(}\PY{n}{loss}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{binary\PYZus{}crossentropy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{optimizer}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{adam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{metrics}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{N\PYZus{}bits}\PY{p}{)}\PY{p}{:}
+             \PY{n}{model}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}split\PYZus{}reshaped}\PY{p}{,} \PY{n}{y\PYZus{}train\PYZus{}split\PYZus{}reshaped}\PY{p}{,} \PY{n}{epochs}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{o}{=}\PY{n}{batch\PYZus{}size}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{shuffle}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+             \PY{n}{model}\PY{o}{.}\PY{n}{reset\PYZus{}states}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Epoch 1/1
+20000/20000 [==============================] - 1s 33us/step - loss: 0.6890 - acc: 0.7496
+Epoch 1/1
+20000/20000 [==============================] - 0s 4us/step - loss: 0.6879 - acc: 0.5040
+Epoch 1/1
+20000/20000 [==============================] - 0s 4us/step - loss: 0.6865 - acc: 0.6760
+Epoch 1/1
+20000/20000 [==============================] - 0s 4us/step - loss: 0.6844 - acc: 0.7252
+Epoch 1/1
+20000/20000 [==============================] - 0s 4us/step - loss: 0.6808 - acc: 0.7504
+Epoch 1/1
+20000/20000 [==============================] - 0s 4us/step - loss: 0.6727 - acc: 0.9008
+Epoch 1/1
+20000/20000 [==============================] - 0s 4us/step - loss: 0.6451 - acc: 0.9752
+Epoch 1/1
+20000/20000 [==============================] - 0s 4us/step - loss: 0.5218 - acc: 1.0000
+Epoch 1/1
+20000/20000 [==============================] - 0s 4us/step - loss: 0.3909 - acc: 1.0000
+Epoch 1/1
+20000/20000 [==============================] - 0s 4us/step - loss: 0.2670 - acc: 1.0000
+Epoch 1/1
+20000/20000 [==============================] - 0s 4us/step - loss: 0.2131 - acc: 1.0000
+Epoch 1/1
+20000/20000 [==============================] - 0s 4us/step - loss: 0.1795 - acc: 1.0000
+Epoch 1/1
+20000/20000 [==============================] - 0s 4us/step - loss: 0.1547 - acc: 1.0000
+Epoch 1/1
+20000/20000 [==============================] - 0s 5us/step - loss: 0.1369 - acc: 1.0000
+Epoch 1/1
+20000/20000 [==============================] - 0s 4us/step - loss: 0.1231 - acc: 1.0000
+Epoch 1/1
+20000/20000 [==============================] - 0s 4us/step - loss: 0.1119 - acc: 1.0000
+Epoch 1/1
+20000/20000 [==============================] - 0s 4us/step - loss: 0.1026 - acc: 1.0000
+Epoch 1/1
+20000/20000 [==============================] - 0s 4us/step - loss: 0.0947 - acc: 1.0000
+Epoch 1/1
+20000/20000 [==============================] - 0s 4us/step - loss: 0.0879 - acc: 1.0000
+Epoch 1/1
+20000/20000 [==============================] - 0s 4us/step - loss: 0.0820 - acc: 1.0000
+
+    \end{Verbatim}
+
+    \hypertarget{para-poder-evaluar-tengo-que-recargar-el-modelo-con-batch_size200-para-que-sea-eficiente}{%
+\subsection{Para poder evaluar tengo que recargar el modelo con
+batch\_size=200 para que sea
+eficiente}\label{para-poder-evaluar-tengo-que-recargar-el-modelo-con-batch_size200-para-que-sea-eficiente}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{X\PYZus{}val\PYZus{}split}\PY{p}{,} \PY{n}{y\PYZus{}val\PYZus{}split} \PY{o}{=} \PY{n}{prepare\PYZus{}sequences}\PY{p}{(}\PY{n}{X\PYZus{}validation}\PY{p}{,} \PY{n}{y\PYZus{}validation}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{X\PYZus{}val\PYZus{}split\PYZus{}reshaped} \PY{o}{=} \PY{n}{X\PYZus{}val\PYZus{}split}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{200}\PY{p}{,}\PY{l+m+mi}{20}\PY{p}{)}\PY{o}{.}\PY{n}{T}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{4000}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{y\PYZus{}val\PYZus{}split\PYZus{}reshaped} \PY{o}{=} \PY{n}{y\PYZus{}val\PYZus{}split}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{200}\PY{p}{,}\PY{l+m+mi}{20}\PY{p}{)}\PY{o}{.}\PY{n}{T}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{4000}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{new\PYZus{}model} \PY{o}{=} \PY{n}{Sequential}\PY{p}{(}\PY{p}{)}
+         \PY{n}{new\PYZus{}model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{LSTM}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{batch\PYZus{}input\PYZus{}shape}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{200}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{return\PYZus{}sequences}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{stateful}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{)}
+         \PY{n}{new\PYZus{}model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigmoid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         \PY{n}{new\PYZus{}model}\PY{o}{.}\PY{n}{compile}\PY{p}{(}\PY{n}{loss}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{binary\PYZus{}crossentropy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{optimizer}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{adam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{metrics}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{n}{old\PYZus{}weights} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{get\PYZus{}weights}\PY{p}{(}\PY{p}{)}
+         \PY{n}{new\PYZus{}model}\PY{o}{.}\PY{n}{set\PYZus{}weights}\PY{p}{(}\PY{n}{old\PYZus{}weights}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{new\PYZus{}model}\PY{o}{.}\PY{n}{evaluate}\PY{p}{(}\PY{n}{X\PYZus{}val\PYZus{}split\PYZus{}reshaped}\PY{p}{,} \PY{n}{y\PYZus{}val\PYZus{}split\PYZus{}reshaped}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{200}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+4000/4000 [==============================] - 0s 51us/step
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}19}]:} [0.07798209129832685, 1.0]
+\end{Verbatim}
+            
+    \hypertarget{batch-size-100}{%
+\section{Batch size = 100}\label{batch-size-100}}
+
+Hay que tomar de a 100 del total de 1000, hacer un reshape a (100,20) y
+luego trasponer
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{X\PYZus{}train\PYZus{}split}\PY{p}{,} \PY{n}{y\PYZus{}train\PYZus{}split} \PY{o}{=} \PY{n}{prepare\PYZus{}sequences}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{c+c1}{\PYZsh{} Asi es como veria los datos el modelo de training}
+         \PY{n}{X\PYZus{}train\PYZus{}split}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{1000}\PY{p}{,}\PY{l+m+mi}{20}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{100}\PY{p}{]}\PY{o}{.}\PY{n}{T} \PY{c+c1}{\PYZsh{}.flatten()}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}21}]:} array([[1., 0., 1., {\ldots}, 1., 0., 1.],
+                [0., 0., 0., {\ldots}, 0., 0., 0.],
+                [0., 0., 0., {\ldots}, 0., 0., 0.],
+                {\ldots},
+                [0., 0., 0., {\ldots}, 0., 0., 0.],
+                [0., 0., 0., {\ldots}, 0., 0., 0.],
+                [0., 0., 0., {\ldots}, 0., 0., 0.]])
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{n}{X\PYZus{}train\PYZus{}split}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}22}]:} (20000, 1)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{X\PYZus{}train\PYZus{}split\PYZus{}reshaped} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}split}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{l+m+mi}{100}
+         \PY{n}{model} \PY{o}{=} \PY{n}{Sequential}\PY{p}{(}\PY{p}{)}
+         \PY{n}{model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{LSTM}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{batch\PYZus{}input\PYZus{}shape}\PY{o}{=}\PY{p}{(}\PY{n}{batch\PYZus{}size}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{return\PYZus{}sequences}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{stateful}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{)}
+         \PY{n}{model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigmoid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         \PY{n}{model}\PY{o}{.}\PY{n}{compile}\PY{p}{(}\PY{n}{loss}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{binary\PYZus{}crossentropy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{optimizer}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{adam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{metrics}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{n}{n\PYZus{}batches} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}split\PYZus{}reshaped}\PY{p}{)}\PY{o}{/}\PY{n}{batch\PYZus{}size}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{n\PYZus{}batches}\PY{p}{)}
+         \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{)}\PY{p}{:}
+             \PY{n}{i} \PY{o}{=} \PY{n}{k}\PY{o}{\PYZpc{}}\PY{k}{10}
+             \PY{n}{X\PYZus{}to\PYZus{}train} \PY{o}{=} \PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}split}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{1000}\PY{p}{,}\PY{l+m+mi}{20}\PY{p}{)}\PY{p}{[}\PY{n}{i}\PY{o}{*}\PY{n}{batch\PYZus{}size}\PY{p}{:}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{batch\PYZus{}size}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{o}{.}\PY{n}{flatten}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{2000}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+             \PY{n}{y\PYZus{}to\PYZus{}train} \PY{o}{=} \PY{n}{y\PYZus{}train\PYZus{}split}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{1000}\PY{p}{,}\PY{l+m+mi}{20}\PY{p}{)}\PY{p}{[}\PY{n}{i}\PY{o}{*}\PY{n}{batch\PYZus{}size}\PY{p}{:}\PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{batch\PYZus{}size}\PY{p}{]}\PY{o}{.}\PY{n}{T}\PY{o}{.}\PY{n}{flatten}\PY{p}{(}\PY{p}{)}
+             \PY{n}{model}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}to\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}to\PYZus{}train}\PY{p}{,} \PY{n}{epochs}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{o}{=}\PY{n}{batch\PYZus{}size}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{shuffle}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+             \PY{n}{model}\PY{o}{.}\PY{n}{reset\PYZus{}states}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+200
+Epoch 1/1
+2000/2000 [==============================] - 1s 406us/step - loss: 0.6949 - acc: 0.5600
+Epoch 1/1
+2000/2000 [==============================] - 0s 37us/step - loss: 0.7007 - acc: 0.4200
+Epoch 1/1
+2000/2000 [==============================] - 0s 38us/step - loss: 0.6943 - acc: 0.5660
+Epoch 1/1
+2000/2000 [==============================] - 0s 38us/step - loss: 0.6932 - acc: 0.4845
+Epoch 1/1
+2000/2000 [==============================] - 0s 40us/step - loss: 0.6922 - acc: 0.4845
+Epoch 1/1
+2000/2000 [==============================] - 0s 39us/step - loss: 0.6922 - acc: 0.4655
+Epoch 1/1
+2000/2000 [==============================] - 0s 37us/step - loss: 0.6908 - acc: 0.4560
+Epoch 1/1
+2000/2000 [==============================] - 0s 41us/step - loss: 0.6863 - acc: 0.6700
+Epoch 1/1
+2000/2000 [==============================] - 0s 38us/step - loss: 0.6953 - acc: 0.4100
+Epoch 1/1
+2000/2000 [==============================] - 0s 41us/step - loss: 0.6838 - acc: 0.7240
+Epoch 1/1
+2000/2000 [==============================] - 0s 41us/step - loss: 0.6789 - acc: 0.7360
+Epoch 1/1
+2000/2000 [==============================] - 0s 38us/step - loss: 0.6831 - acc: 0.5650
+Epoch 1/1
+2000/2000 [==============================] - 0s 40us/step - loss: 0.6597 - acc: 0.7610
+Epoch 1/1
+2000/2000 [==============================] - 0s 41us/step - loss: 0.6435 - acc: 0.5100
+Epoch 1/1
+2000/2000 [==============================] - 0s 41us/step - loss: 0.5308 - acc: 0.6815
+Epoch 1/1
+2000/2000 [==============================] - 0s 61us/step - loss: 0.3671 - acc: 1.0000
+Epoch 1/1
+2000/2000 [==============================] - 0s 54us/step - loss: 0.2806 - acc: 0.9760
+Epoch 1/1
+2000/2000 [==============================] - 0s 54us/step - loss: 0.2122 - acc: 0.9800
+Epoch 1/1
+2000/2000 [==============================] - 0s 60us/step - loss: 0.1774 - acc: 0.9705
+Epoch 1/1
+2000/2000 [==============================] - 0s 61us/step - loss: 0.1487 - acc: 1.0000
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{n}{X\PYZus{}val\PYZus{}split}\PY{p}{,} \PY{n}{y\PYZus{}val\PYZus{}split} \PY{o}{=} \PY{n}{prepare\PYZus{}sequences}\PY{p}{(}\PY{n}{X\PYZus{}validation}\PY{p}{,} \PY{n}{y\PYZus{}validation}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{X\PYZus{}val\PYZus{}split\PYZus{}reshaped} \PY{o}{=} \PY{n}{X\PYZus{}val\PYZus{}split}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{200}\PY{p}{,}\PY{l+m+mi}{20}\PY{p}{)}\PY{o}{.}\PY{n}{T}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{4000}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{y\PYZus{}val\PYZus{}split\PYZus{}reshaped} \PY{o}{=} \PY{n}{y\PYZus{}val\PYZus{}split}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{200}\PY{p}{,}\PY{l+m+mi}{20}\PY{p}{)}\PY{o}{.}\PY{n}{T}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{l+m+mi}{4000}\PY{p}{)}
+         
+         \PY{n}{new\PYZus{}model} \PY{o}{=} \PY{n}{Sequential}\PY{p}{(}\PY{p}{)}
+         \PY{n}{new\PYZus{}model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{LSTM}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{batch\PYZus{}input\PYZus{}shape}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{200}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{n}{return\PYZus{}sequences}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{stateful}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{)}
+         \PY{n}{new\PYZus{}model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sigmoid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         \PY{n}{new\PYZus{}model}\PY{o}{.}\PY{n}{compile}\PY{p}{(}\PY{n}{loss}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{binary\PYZus{}crossentropy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{optimizer}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{adam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{metrics}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{old\PYZus{}weights} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{get\PYZus{}weights}\PY{p}{(}\PY{p}{)}
+         \PY{n}{new\PYZus{}model}\PY{o}{.}\PY{n}{set\PYZus{}weights}\PY{p}{(}\PY{n}{old\PYZus{}weights}\PY{p}{)}
+         
+         \PY{n}{new\PYZus{}model}\PY{o}{.}\PY{n}{evaluate}\PY{p}{(}\PY{n}{X\PYZus{}val\PYZus{}split\PYZus{}reshaped}\PY{p}{,} \PY{n}{y\PYZus{}val\PYZus{}split\PYZus{}reshaped}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{200}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+4000/4000 [==============================] - 0s 56us/step
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}26}]:} [0.1347997548058629, 1.0]
+\end{Verbatim}
+            
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
